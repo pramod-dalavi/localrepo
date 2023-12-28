@@ -1,0 +1,11 @@
+---
+- name: check file
+  hosts: all
+  tasks: 
+  - name: check the file is exist or not
+    stat:
+     path: /opt/pramod.txt
+    register: re
+  - debug:
+     msg: "{{ re }}"
+...

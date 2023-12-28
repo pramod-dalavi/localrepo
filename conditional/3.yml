@@ -1,0 +1,10 @@
+---
+- name: example 4
+  hosts: all
+  tasks: 
+  - name: expale 4 for condition 
+    yum:
+     name: ftp
+     state: installed
+    when: (ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7') or (ansible_distribution == 'Redhat' and ansible_distribution_major_version == '9')
+...

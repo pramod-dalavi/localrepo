@@ -1,0 +1,8 @@
+---
+- name: checking the Rhel version
+  hosts: all
+  tasks: 
+  - name: checking the version 
+    shell: echo "This is Centos machine"
+    when: ansible_distribution == "CentOS"
+...

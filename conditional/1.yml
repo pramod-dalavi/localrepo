@@ -1,0 +1,10 @@
+---
+- name: expample1 of condtional 
+  hosts: all
+  tasks:
+  - name: example 1
+    yum:
+     name: ftp
+     state: installed
+    when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
+...

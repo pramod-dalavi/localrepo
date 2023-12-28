@@ -1,0 +1,10 @@
+---
+- name: ansible checking  playbook
+  hosts: all
+  tasks:
+  - name: using command
+    stat: 
+      path: /etc/redhat-release
+    register: re
+  - debug:
+      var: re

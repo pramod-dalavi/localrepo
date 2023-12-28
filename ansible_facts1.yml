@@ -1,0 +1,9 @@
+---
+- name: check the kernel 
+  hosts: all
+  tasks: 
+  - name: check the kernel
+    copy:
+     content: 'Krenel version is "{{ ansible_kernel }}"'
+     dest: /tmp/kernel.txt
+...

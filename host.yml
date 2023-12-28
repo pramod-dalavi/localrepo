@@ -1,0 +1,15 @@
+---
+- name: add the host entry
+  hosts: all
+  tasks:
+  - name: create the file
+    file:
+     path: /tmp/hosts.txt
+     state: touch
+     mode: 0644
+  - name: add the host 
+    lineinfile:
+     path: /tmp/hosts.txt
+     line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+     insertafter: EOF
+... 

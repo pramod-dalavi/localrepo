@@ -1,0 +1,11 @@
+---
+- name: egoner the error
+  hosts: all
+  tasks: 
+  - name: statrt the service
+    command: systemctl is-active cockpit.service
+    register: ser
+    ignore_errors: yes
+  - debug:
+     var: "{{ ser }}"
+...

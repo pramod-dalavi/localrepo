@@ -1,0 +1,9 @@
+---
+- name: print the message without gather the fact
+  hosts: all
+  tasks:
+  - name: print mesaage without gather fact
+    debug:
+     msg: "hello pramod"
+  gather_facts: false
+...

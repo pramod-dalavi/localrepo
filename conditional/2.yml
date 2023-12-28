@@ -1,0 +1,10 @@
+---
+- name: example 2
+  hosts: all
+  tasks: 
+  - name: create the or logic
+    yum:
+     name: ftp
+     state: absent
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Redhat'
+...

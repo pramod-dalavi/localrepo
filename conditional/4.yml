@@ -1,0 +1,19 @@
+---
+- name: craeting the exist file
+  hosts: all
+  tasks:
+  - name: careting the if not present
+    stat:
+     path: /tmp/ansible
+    register: re
+  - debug:
+     var: re.stat.exists
+  - name: creating file
+    file:
+     path: /tmp/ansible
+     state: touch
+     mode: 0644
+     owner: root
+     group: root
+    when: re.stat.exists == false
+...
