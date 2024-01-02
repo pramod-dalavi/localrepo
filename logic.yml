@@ -1,0 +1,9 @@
+---
+- name: create the yml file using AND and OR logical
+  hosts: all
+  tasks: 
+  - name: installing the package the on node one 
+    yum: 
+     name: ftp
+     state: present
+    when: ( ansible_hostname == "node1" and ansible_distribution_version == "7.9" ) or ( ansible_hostname == "node1" and ansible_distribution_version == "9.2" )
