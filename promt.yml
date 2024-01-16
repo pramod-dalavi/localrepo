@@ -1,0 +1,17 @@
+---
+- name: modify the user
+  hosts: all
+  vars_prompt:
+  - name: user_name
+    prompt: "enter the user name"
+    private: no
+  - name: password
+    prompt: "enter the passsword"
+    private: yes
+  tasks:
+  - name: password update
+    user:
+     name: "{{ user_name }}"
+     password: "{{ password | password_hash }}"
+     state: present
+...

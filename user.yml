@@ -1,0 +1,43 @@
+---
+- name: create the multiple user
+  hosts: all
+  vars_files: password.yml
+  tasks:
+  - name: create the user also add the comment
+    user:
+     name: devops
+     comment: using devops
+     state: present
+  - name: add the user amit with password
+    user: 
+     name: amit
+     state: present
+     password: "{{ pw }}"
+  - name: add the group add in neharaclass
+    group:
+     name: vitu
+     state: present
+  - name: add the user mavuli  in  vitu
+    user: 
+     name: mavuli
+     groups: vitu
+     append: yes
+  - name: add the Rahul and genetrate for SSH Key
+    user:
+     name: rahul
+     generate_ssh_key: yes
+     ssh_key_bits: 2048
+     ssh_key_file: .ssh/id_rsa
+  - name: add the user no home and set account to expire on certain date
+    user:
+     name: nohome
+     create_home: no
+     expires: 1090155615
+  - name: add the user vinay sharma with specific uid as 1077 having username as vinay, having home directory as /home/vijayshrama
+    user: 
+     name: vinay
+     uid: 1077
+     comment: Vinay Sharma
+     create_home: yes
+     home: /home/Vinay_Sharma
+...
