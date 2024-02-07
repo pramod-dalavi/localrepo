@@ -1,0 +1,16 @@
+---
+- name: install and started the service
+  hosts: 192.168.1.112 
+  tasks: 
+  - name: install the package
+    yum: 
+     name: ntp
+     state: installed
+    notify: restarted service
+  handlers:
+  - name: restarted service
+    service:
+     name: ntpd
+     state: restarted
+     enabled: true
+... 

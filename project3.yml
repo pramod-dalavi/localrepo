@@ -1,0 +1,11 @@
+---
+- name: file is exist or not
+  hosts: all
+  tasks: 
+  - name: file is exist or not
+    stat:
+      path: /opt/ldapbackup/
+    register: res
+  - debug:
+     msg: "{{ res }}"
+...

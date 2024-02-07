@@ -1,0 +1,7 @@
+---
+- name: check the file is exist or not
+  hosts: all
+  tasks:
+  - name: check file
+    stat:
+     path: /opt/

@@ -1,0 +1,27 @@
+---
+- name: create the user and assigne the file 
+  hosts: all
+  vars_files: /ansible/password1.yml 
+  vars_prompt:
+  - name: user
+    prompt: "Create user. Kindly put the user name"
+    private: no
+  tasks:
+  - name: create the user name
+    user:
+     name: "{{ user }}"
+     state: present
+     password: "{{ pw | password_hash }}"
+     sudo: yes
+  - name: create the file
+    file:
+     path: /opt/pramod.txt
+     state: touch
+     owner: "{{ user }}"
+     mode: 0644
+  - name: add the contain
+    lineinfile:
+     path: /opt/pramod.txt
+     line: "Hi Pramod"
+     state: present
+...

@@ -1,0 +1,9 @@
+---
+- name: check the file
+  hosts: all
+  vars:
+   pramod: date "+%d%y%m" 
+  tasks: 
+  - debug:
+     msg: "{{ pramod }}"
+...    
