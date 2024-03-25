@@ -1,0 +1,15 @@
+---
+- name: create the file by using 
+  hosts: all
+  tasks:
+  - block:
+    - name: create the file
+      copy:
+       src: /opt/pramod.txt
+       dest: /tmp/pramod.txt1
+    rescue:
+    - name: if failed we copy the file by mannually
+      copy:
+       content: "hello world"
+       dest: /tmp/pramod.txt1
+...

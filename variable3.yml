@@ -1,0 +1,14 @@
+---
+- name: file with variable
+  hosts: all
+  vars_files:
+  - password.yml
+  tasks: 
+  - name: create the one user
+    user:
+     name: shweta
+     create_home: yes
+     home: /var/tmp/shweta
+     password: "{{ pw | password_hash }}"
+     state: present
+... 

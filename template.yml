@@ -1,0 +1,8 @@
+---
+- name: crete the motd by template
+  hosts: all
+  tasks:
+  - template:
+     src: motd.j2
+     dest: /etc/motd
+...

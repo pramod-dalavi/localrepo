@@ -1,0 +1,13 @@
+---
+- name: creating the user
+  hosts: all
+  vars_files:
+  - /ansible/practice/user.yml
+  tasks:
+  - name: creating the user
+    user:
+     name: "{{ item }}"
+     state: present
+    with_items:
+    - "{{ user }}"
+...

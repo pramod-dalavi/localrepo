@@ -1,0 +1,10 @@
+---
+- name: sample the facts 
+  hosts: all
+  tasks: 
+  - name: store the kernel version
+    copy:
+     content: The kernel version is "{{ ansible_kernel }}"
+     dest: /tmp/kernel.txt
+     remote_src: yes
+...

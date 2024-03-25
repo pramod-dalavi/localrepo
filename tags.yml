@@ -1,0 +1,19 @@
+---
+- name: insrall the pcakage
+  hosts: all
+  tasks:
+  - name: install the ntp
+    yum:
+     name: ntp
+     state: installed
+    notify: restarted service
+    tags:
+    - ntp_tag
+  handlers:
+  - name: restarted service
+    service:
+     name: ntpd
+     state: restarted
+    tags:
+    - service_tag
+...

@@ -1,0 +1,16 @@
+- name: using prompt
+  hosts: all
+  vars_prompt:
+  - name: user
+    prompt: enter the user name
+    private: no
+  - name: password
+    prompt: enter the password
+    private: yes
+  tasks: 
+  - name: create the user
+    user:
+     name: "{{ user }}"
+     create_home: yes
+     home: /var/tmp/"{{ user }}"
+     password: "{{ password | password_hash }}"

@@ -1,0 +1,8 @@
+---
+- name: create the sample file by condiyion
+  hosts: all
+  tasks: 
+  - name: using logic 
+    shell: echo "hello world"
+    when: ( ansible_distribution == "CentOS" or ansible_distribution_version == "7.9" ) and ( ansible_distribution == "Redhat" or ansible_distribution_version == "8.9" )
+...

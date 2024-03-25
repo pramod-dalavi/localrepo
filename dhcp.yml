@@ -1,0 +1,31 @@
+---
+- name: configure the dhcp-server
+  hosts: all
+  tasks:
+  - name: set the hostname
+    hostname:
+     name: dhcp.pramod.com
+     use: systemd
+  - name: install dhcp package
+    yum: 
+     name: dhcp
+     state: installed
+  - name: copy the configuration file on server
+    template:
+     src: /root/pramod.j2
+     dest: /etc/dhcp.conf
+  - name: adding in the firewall
+    firewalld:
+     service: dhcp
+     zone: public
+     permennt: true
+     immediate: true
+     state: enabled
+    notify: restart the service
+  handlers:
+  - name: restart the service
+    systemd:
+     name: dhcpd
+     state: started
+     enabled: true
+...

@@ -1,0 +1,7 @@
+---
+- name: create the sample file 
+  hosts: all
+  tasks: 
+  - debug: 
+     msg: hello Pramod
+    when: ansible_distribution == "CentOS"

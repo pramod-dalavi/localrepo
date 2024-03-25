@@ -1,0 +1,8 @@
+---
+- name: check the condition
+  hosts: all
+  tasks:
+  - name: print the hello word on centos version
+    shell: echo "hello word"
+    when: ansible_distribution == "Redhat"
+... 

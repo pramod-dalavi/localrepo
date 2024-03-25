@@ -1,0 +1,8 @@
+- name: sample project using vars
+  hosts: all
+  vars:
+   pramod: hello pramod
+  tasks:
+  - debug:
+     msg: welcome to house "{{ pramod }}"
+...

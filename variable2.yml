@@ -1,0 +1,12 @@
+--- 
+- name: list variable
+  hosts: all
+  vars:
+   pd:
+    - pramod
+    - uttam
+    - vidhya
+  tasks:
+  - debug:   
+     msg: my name is "{{ pd[1] }}"
+...

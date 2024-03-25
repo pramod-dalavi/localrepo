@@ -1,0 +1,16 @@
+---
+- name: check the file is exits or not
+  hosts: all
+  tasks:
+  - name: check the file is exist or not
+    stat:
+     path: /opt/open.txt
+    register: var
+  - debug:
+     msg: "{{ var }}"
+  - name: creating the file if not present
+    file:
+     path: /opt/open.txt
+     state: touch
+    when: var.stat.exists == false
+...

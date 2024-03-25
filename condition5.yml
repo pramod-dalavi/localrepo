@@ -1,0 +1,8 @@
+---
+- name: check verion and distrubution
+  hosts: all
+  tasks:
+  - name: check verion and distribution
+    shell: echo "hello world"
+    when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "8"
+...          

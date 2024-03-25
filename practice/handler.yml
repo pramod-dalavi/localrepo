@@ -1,0 +1,15 @@
+---
+- name: useing the handler
+  hosts: all
+  tasks:
+  - name: install the handler
+    yum:
+     name: ntp
+     state: installed
+    notify: restarted service
+  handlers:
+  - name: restarted service
+    service:
+     name: ntpd
+     state: restarted
+...

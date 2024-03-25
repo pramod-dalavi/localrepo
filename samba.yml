@@ -1,0 +1,60 @@
+---
+- name: configuration smaba packagge 
+  hosts: all
+  tasks:
+  - name: set the hostname of the server.
+    hostname: 
+     name: smaba.bseindia.com
+     use: systemd
+  - name: install the pcakges
+    yum:
+     name: "{{ item }}"
+     state: installed
+    loop:
+    - samba
+    - samba-client
+  - name: create the group
+    group:
+     name: sambashare1
+     state: present
+  - name: create the user 
+    user:
+     name: demo
+     groups: sambashare1
+     append: yes
+  - name: create the file
+    file:
+     path: /samba
+     state: directory
+     mode: 0755
+     group: sambashare1
+     owner: root
+  - name: add the user in samba service
+    shell: "printf '123456\n123456\n' | smbpasswd -a demo"
+  - name: enable the user in samba
+    shell: smbpasswd -e demo
+  - name: adding the firewalld
+    firewalld:
+     service: samba
+     zone: public
+     permanent: true 
+     immediate: true
+     state: enabled
+  - name: adding in selinux
+    command: chcon -t samba_share_t /samba/
+  - name: adding the configuration file
+    template:
+     src: /root/smb.j2
+     dest: /etc/samba/smb.conf
+     force: true
+    notify: restart the service
+  handlers:
+  - name: restart the service
+    systemd:
+     name: "{{ item }}"
+     state: started
+     enabled: true
+    loop:
+    - smb
+    - nmb
+...

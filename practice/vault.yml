@@ -1,0 +1,10 @@
+- name: update the passowrd
+  hosts: all
+  vars_files: /ansible/practice/password.yml 
+  tasks:
+  - name: update the password
+    user:
+     name: rachana
+     update_password: always
+     password: "{{ password | password_hash('sha512') }}"
+...

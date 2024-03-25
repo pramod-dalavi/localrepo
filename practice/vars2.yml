@@ -1,0 +1,9 @@
+- name: using vars file
+  hosts: all
+  vars_files: /ansible/practice/vars.yml
+  tasks:
+  - debug: 
+     msg: "{{ apache_root }}"
+  - debug:
+     msg: "{{ apache }}"
+...

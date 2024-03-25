@@ -1,0 +1,9 @@
+---
+- name: creating yml file
+  hosts: all
+  tasks: 
+  - name: preparing the conditional format
+    debug:
+     msg: Hello pramod
+    when: (ansible_distribution == "CentOS" and ansible_distribution_version == "7.9") or (ansible_distribution == "Redhat" and ansible_distribution_version == "7.9")
+...

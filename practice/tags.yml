@@ -1,0 +1,15 @@
+---
+- name: using the tags we perform the tasks
+  hosts: all
+  tasks:
+  - name: show the id 
+    command: id rachana
+    tags:
+    - id_tag
+  - name: create the directory
+    file:
+     path: /opt/dir1
+     state: directory
+    tags:
+    - dir_tags
+...

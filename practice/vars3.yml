@@ -1,0 +1,13 @@
+- name: using array and list type of vars
+  hosts: all
+  vars: 
+   myapp:
+   - zsh
+   - zip
+   - mailx
+  tasks:
+  - debug:
+     msg: "{{ myapp }}"
+  - debug:
+     msg: "{{ myapp[0] }}"
+...

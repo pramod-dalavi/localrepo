@@ -1,0 +1,17 @@
+---
+- name: create the file with ip 
+  hosts: all
+  tasks:
+  - name: create the file
+    file:
+     path: /tmp/hosts
+     state: touch
+     mode: 0644
+     owner: root
+     group: root
+  - name: inster the line
+    lineinfile:
+     line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+     insertafter: EOF
+     path: /tmp/hosts
+...

@@ -1,0 +1,8 @@
+---
+- name: loop
+  hosts: all
+  tasks:
+  - debug:
+     msg: "{{ item }}"
+    with_lines: cat myuser
+...

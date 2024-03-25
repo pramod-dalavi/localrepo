@@ -1,0 +1,12 @@
+---
+- name: display the message
+  hosts: all
+  tasks:
+  - debug:
+     msg: "{{ item }}"
+    with_items:
+    - pramod
+    - prathamesh
+    - shweta
+    - janvi
+...

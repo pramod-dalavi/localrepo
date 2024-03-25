@@ -1,0 +1,10 @@
+---
+- name: using loop
+  hosts: all
+  vars_files:
+  - myuser.yml
+  tasks:
+  - debug:
+     msg: "{{ item }}"
+    with_items:
+    - "{{ user }}"
