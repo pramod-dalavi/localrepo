@@ -1,0 +1,9 @@
+---
+- name: configure the client 
+  hosts: 192.168.1.113
+  tasks:
+  - name: run the scripts
+    script: /ansible/iSCSI_Target_Initiator/iscsi-initiator.sh
+    args:
+     creates: /home/pramod/iscsi-initiator.sh
+...
