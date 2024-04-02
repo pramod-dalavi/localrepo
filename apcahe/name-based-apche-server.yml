@@ -1,12 +1,12 @@
 ---
 - name: create the name based apcahe server
   hosts: 192.168.1.113
-  tasks: 
-  - name: set the hostname 
+  tasks:
+  - name: set the hostname
     hostname:
      name: node2.bseindia.com
      use: systemd
-  - name: add the hosts file 
+  - name: add the hosts file
     lineinfile:
      path: /etc/hosts
      line: 192.168.1.113  www.bseindia.com node1
@@ -25,8 +25,8 @@
      dest: /var/www/html/index.html
      content: |
       <img src="/IMG_20220202_135952.jpg" width="500" height="500" />
-      <h1>Shweta I love You,I miss you.</h1>
-      <i>You are best bayko in the world.</i>
+      <h1>Welocme to our page.</h1>
+      <i>Thank you for visiting.</i>
   - name: Creating httpd configuration file /etc/httpd/conf.d
     copy:
      dest: /etc/httpd/conf.d/httpd.conf
@@ -39,7 +39,7 @@
       ErrorLog logs/www.bseindia.com-error_log
       CustomLog logs/www.bseindia.com-acess_log common
       </VirtualHost>
-  - name: making the confiuration file 
+  - name: making the confiuration file
     replace:
      dest: /etc/httpd/conf/httpd.conf
      regexp: '^#NameVirtualHost'
