@@ -1,0 +1,59 @@
+---
+- name: create the name based apcahe server
+  hosts: 192.168.1.113
+  tasks: 
+  - name: set the hostname 
+    hostname:
+     name: node2.bseindia.com
+     use: systemd
+  - name: add the hosts file 
+    lineinfile:
+     path: /etc/hosts
+     line: 192.168.1.113  www.bseindia.com node1
+     insertafter: EOF
+  - name: intsall the package apcahe
+    yum:
+     name: httpd
+     state: latest
+  - name: copy the images into /var/www/html
+    copy:
+     src: /ansible/apcahe/IMG_20220202_135952.jpg
+     dest: /var/www/html/IMG_20220202_135952.jpg
+     mode: 0644
+  - name: creating index web file
+    copy:
+     dest: /var/www/html/index.html
+     content: |
+      <img src="/IMG_20220202_135952.jpg" width="500" height="500" />
+      <h1>Shweta I love You,I miss you.</h1>
+      <i>You are best bayko in the world.</i>
+  - name: Creating httpd configuration file /etc/httpd/conf.d
+    copy:
+     dest: /etc/httpd/conf.d/httpd.conf
+     content: |
+      <VirtualHost 192.168.1.113:80>
+      ServerAdmin root@node2.bseindia.com
+      ServerAlias bseindia.com node2
+      DocumentRoot /var/www/html/
+      ServerName www.bseindia.com
+      ErrorLog logs/www.bseindia.com-error_log
+      CustomLog logs/www.bseindia.com-acess_log common
+      </VirtualHost>
+  - name: making the confiuration file 
+    replace:
+     dest: /etc/httpd/conf/httpd.conf
+     regexp: '^#NameVirtualHost'
+     replace: 'NameVirtualHost 192.168.1.113:80'
+  - name: allow in the firewalld
+    firewalld:
+     service: http
+     zone: public
+     permanent: true
+     immediate: true
+     state: enabled
+  - name: enabled and started the serverice
+    systemd:
+     name: httpd
+     state: started
+     enabled: true
+...

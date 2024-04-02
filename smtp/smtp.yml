@@ -1,0 +1,36 @@
+---
+- name: SMTP Relay Mial Configuration Using Ansible Playbook
+  hosts: 192.168.1.113
+  become: true
+  tasks:
+  - name: Setting the static hostname 
+    hostname: 
+     name: mail-server.pramod.local
+     use: systemd
+  - name: Installing sendmail packages in the machine
+    yum:
+     name:
+     - sendmail<F3>
+     - procmail
+     - s-nail
+     - make
+     state: installed
+  - name: Creating the file in the /etc/mail directory having then
+    template:
+     src: authinfo.j2
+     dest: /etc/mail/authinfo
+  - name: copy the sendmail configuration file
+    template:
+     src: sendmail.mc.j2
+     dest: /etc/mail/sendmail.mc
+     force: true
+  - name: making the chnages in send mail file
+    shell: m4 /etc.mail/sendmail.mc > /etc/mail/sendmail.cf
+  - name: Creating encryt database file (authinfo.db) using authinfo file
+    shell: makemap hash /etc/mail/authinfo < /etc/mail/authinfo
+  - name:  staring & enabled the service
+    service:
+     name: sendmail
+     state: started 
+     enabled: true
+...

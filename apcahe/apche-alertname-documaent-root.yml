@@ -1,0 +1,80 @@
+---
+- name: create the name based apcahe server
+  hosts: 192.168.1.113
+  tasks:
+  - name: set the hostname
+    hostname:
+     name: node2.bseindia.com
+     use: systemd
+  - name: add the hosts file
+    lineinfile:
+     path: /etc/hosts
+     line: 192.168.1.113  www.bseindia.com node1
+     insterafter: EOF
+  - name: intsall the package apcahe
+    yum:
+     name:
+     - httpd
+     - policycoreutils-python-utils
+     state: latest
+  - name: create the folder
+    file:
+     path: /Pramod
+     state: directory
+     mode: 0755
+     owner: apache
+     group: apache
+  - name: copy the images into /var/www/html
+    copy:
+     src: /ansible/apcahe/IMG_20220202_135952.jpg
+     dest: /var/www/html/IMG_20220202_135952.jpg
+     mode: 0644
+  - name: creating and copy the content in the html file 
+    copy:
+     path: /Pramod/index.html
+     content: |
+      <img src="/IMG_20220202_135952.jpg" width="500" height="500" />
+      <h1>First website.</h1>
+      <i>Welcome to our website.</i>
+  - name: configure the index file 
+    copy: 
+     path: /etc/httpd/conf/httpd.conf
+     content: |
+      <VirtualHost 192.168.1.113:80>
+      ServerAdmin root@node2.bseindia.com
+      ServerAlias bseindia.com node2
+      DocumentRoot /Pramod
+      ServerName www.bseindia.com
+      ErrorLog logs/www.bseindia.com-error_log
+      CustomLog logs/www.bseindia.com-acess_log common
+      <Directory /Pramod/>
+      Options Indexes FollowSymLink
+      AllowOveride None
+      Require all granted
+      </Directory>
+      </VirtualHost>
+  - name: Copy /etc/httpd/conf/httpd.conf file using ansible using jinza template 
+    template: 
+     src: httpd.conf.j2
+     dest: /etc/httpd/conf/httpd.conf
+  - name: Allowing Apache to modify the files in the /Pramod
+    community.general.sefcontext:
+     target: '/Pramod/.*)?'
+     setype: httpd_sys_content_t
+     state: present
+  - name: Apply the new selinuxs file contetxt
+    command: restorecon  -Rv /Pramod/
+  - name: allow in the firewalld
+    firewalld:
+      service: http
+      zone: public
+      permanent: true
+      immediate: true
+      state: enabled
+  - name: enabled and started the serverice
+    systemd:    
+     name: httpd
+     state: started
+     enabled: true
+...
+
